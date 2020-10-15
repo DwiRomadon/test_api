@@ -383,7 +383,84 @@ exports.updateData = (data, id) =>
         })
     })
 
-exports.inputFav = (data) =>
+exports.updateDataJenisHewan= (data, id, idJenisHewan) =>
     new Promise(async (resolve, reject)=>{
+        var jenisHewan = data.jenisHewan[0]
+        console.log(jenisHewan.nama)
+        dokwan.update(
+            {
+                _id: ObjectId(id),
+                "jenisHewan._id" : ObjectId(idJenisHewan)
+            }, { $set: {
+                    "jenisHewan.$.nama": jenisHewan.nama,
+                }
+            }
+        )
+            .then(r=>{
+                console.log(r)
+                resolve(response.commonSuccessMsg('Berhasil merubah data'))
+            }).catch(err => {
+            reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
+        })
+    })
 
+exports.hapusDataJenisHewan = (id, idJenis) =>
+    new Promise(async (resolve, reject)=>{
+        dokwan.update(
+            {
+                _id: ObjectId(id),
+            }, {
+                $pull: {
+                    "jenisHewan" : {
+                        _id: ObjectId(idJenis)
+                    }
+                }
+            }
+        )
+            .then(r=>{
+                resolve(response.commonSuccessMsg('Berhasil menghapus data'))
+            }).catch(err => {
+            reject(response.commonErrorMsg('Mohon Maaf Hapus Data Gagal'))
+        })
+    })
+
+
+exports.updateDataPerawatan= (data, id, idPerawatan) =>
+    new Promise(async (resolve, reject)=>{
+        var perawatan = data.perawatan[0]
+        dokwan.update(
+            {
+                _id: ObjectId(id),
+                "perawatan._id" : ObjectId(idPerawatan)
+            }, { $set: {
+                    "perawatan.$.nama": perawatan.nama,
+                }
+            }
+        )
+            .then(r=>{
+                console.log(r)
+                resolve(response.commonSuccessMsg('Berhasil merubah data'))
+            }).catch(err => {
+            reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
+        })
+    })
+
+exports.hapusDataPerawatan = (id, idJenis) =>
+    new Promise(async (resolve, reject)=>{
+        dokwan.update(
+            {
+                _id: ObjectId(id),
+            }, {
+                $pull: {
+                    "perawatan" : {
+                        _id: ObjectId(idJenis)
+                    }
+                }
+            }
+        )
+            .then(r=>{
+                resolve(response.commonSuccessMsg('Berhasil menghapus data'))
+            }).catch(err => {
+            reject(response.commonErrorMsg('Mohon Maaf Hapus Data Gagal'))
+        })
     })

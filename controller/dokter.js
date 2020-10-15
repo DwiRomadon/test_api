@@ -28,3 +28,32 @@ exports.getdokter = (idDokwan) =>
             reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
         })
     })
+
+exports.updateDataDokter = (data, id) =>
+    new Promise(async (resolve, reject)=>{
+        dokter.update(
+            {
+                _id: ObjectId(id)
+            }, { $set: data }
+        )
+            .then(r=>{
+                resolve(response.commonSuccessMsg('Berhasil merubah data'))
+            }).catch(err => {
+            reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
+        })
+    })
+
+
+exports.hapusDataDokter = (id) =>
+    new Promise(async (resolve, reject)=>{
+        dokter.remove(
+            {
+                _id: ObjectId(id)
+            }
+        )
+            .then(r=>{
+                resolve(response.commonSuccessMsg('Berhasil Menghapus data'))
+            }).catch(err => {
+            reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
+        })
+    })

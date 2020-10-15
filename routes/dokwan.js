@@ -67,4 +67,28 @@ router.put("/ubah/:id",upload, (req, res) => {
         .catch((err) => res.json(err))
 })
 
+router.put("/ubahjenishewan/:id/:idJenis", (req, res) => {
+    dokwan.updateDataJenisHewan(req.body, req.params.id, req.params.idJenis)
+        .then((result) => res.json(result))
+        .catch((err) => res.json(err))
+})
+
+router.put("/ubahperawatanhewan/:id/:idJenis", (req, res) => {
+    dokwan.updateDataPerawatan(req.body, req.params.id, req.params.idJenis)
+        .then((result) => res.json(result))
+        .catch((err) => res.json(err))
+})
+
+router.delete("/hapusjenishewan/:id/:idJenis", (req, res) => {
+    dokwan.hapusDataJenisHewan(req.params.id, req.params.idJenis)
+        .then((result) => res.json(result))
+        .catch((err) => res.json(err))
+})
+
+router.delete("/hapusdataperawatan/:id/:idJenis", (req, res) => {
+    dokwan.hapusDataPerawatan(req.params.id, req.params.idJenis)
+        .then((result) => res.json(result))
+        .catch((err) => res.json(err))
+})
+
 module.exports = router
