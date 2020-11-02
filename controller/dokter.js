@@ -57,3 +57,19 @@ exports.hapusDataDokter = (id) =>
             reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
         })
     })
+
+
+exports.updateDataHari = (data, id, hari) =>
+    new Promise(async (resolve, reject)=>{
+        dokter.update(
+            {
+                idDokwan: ObjectId(id),
+                "jadwalLayanan.hari" : hari
+            }, { $set: {"jadwalLayanan.$.jam": data.jam} }
+        )
+            .then(r=>{
+                resolve(response.commonSuccessMsg('Berhasil merubah data'))
+            }).catch(err => {
+            reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
+        })
+    })

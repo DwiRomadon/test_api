@@ -19,6 +19,12 @@ router.put("/ubahpetdokter/:id/", (req, res) => {
         .catch((err) => res.json(err))
 })
 
+router.put("/ubahpetshop/:id/:hari", (req, res) => {
+    dokter.updateDataHari(req.body, req.params.id, req.params.hari)
+        .then((result) => res.json(result))
+        .catch((err) => res.json(err))
+})
+
 router.delete("/hapusdokter/:id/", (req, res) => {
     dokter.hapusDataDokter(req.params.id)
         .then((result) => res.json(result))

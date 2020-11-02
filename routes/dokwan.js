@@ -50,6 +50,7 @@ router.post("/getdatahistory/:radius/", (req, res) => {
 })
 
 router.put("/ubahpetdokwan/:id/",upload, (req, res) => {
+    console.log(req.body)
     dokwan.updateDataDokswa(req.body, req.params.id)
         .then((result) => res.json(result))
         .catch((err) => res.json(err))
@@ -87,6 +88,12 @@ router.delete("/hapusjenishewan/:id/:idJenis", (req, res) => {
 
 router.delete("/hapusdataperawatan/:id/:idJenis", (req, res) => {
     dokwan.hapusDataPerawatan(req.params.id, req.params.idJenis)
+        .then((result) => res.json(result))
+        .catch((err) => res.json(err))
+})
+
+router.delete("/hapusdata/:id", (req, res) => {
+    dokwan.hapusData(req.params.id)
         .then((result) => res.json(result))
         .catch((err) => res.json(err))
 })

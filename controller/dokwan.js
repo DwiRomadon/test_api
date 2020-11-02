@@ -86,7 +86,7 @@ exports.getDokwan = (data, radius,idUser) =>
                         })
                     }
                 }
-                resolve(response.commonResult(datas))
+                resolve(response.commonResult(datas.sort(compare)))
             }).catch(err => {
             reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
         })
@@ -164,12 +164,26 @@ exports.getDokwanFav = (data, radius) =>
                         })
                     }
                 }
-                resolve(response.commonResult(datas))
+                resolve(response.commonResult(datas.sort(compare)))
             }).catch(err => {
             reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
         })
     })
 
+
+exports.hapusData = (id) =>
+    new Promise(async (resolve, reject)=>{
+        dokwan.deleteOne(
+            {
+                _id: ObjectId(id)
+            },
+        )
+            .then(r=>{
+                resolve(response.commonSuccessMsg('Berhasil menghapus data'))
+            }).catch(err => {
+            reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
+        })
+    })
 
 exports.getDokwanHistroy = (data, radius) =>
     new Promise(async (resolve, reject)=>{
@@ -243,7 +257,7 @@ exports.getDokwanHistroy = (data, radius) =>
                         })
                     }
                 }
-                resolve(response.commonResult(datas))
+                resolve(response.commonResult(datas.sort(compare)))
             }).catch(err => {
             reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
         })
@@ -318,7 +332,7 @@ exports.getDokwanUser = (data, radius) =>
                         })
                     }
                 }
-                resolve(response.commonResult(datas))
+                resolve(response.commonResult(datas.sort(compare)))
             }).catch(err => {
             reject(response.commonErrorMsg('Mohon Maaf Input Data Gagal'))
         })
@@ -464,3 +478,15 @@ exports.hapusDataPerawatan = (id, idJenis) =>
             reject(response.commonErrorMsg('Mohon Maaf Hapus Data Gagal'))
         })
     })
+
+const compare = (a, b) => {
+    const jarakA = Number(a.jarak.distance.replace("km", "").toUpperCase());
+    const jarakB = Number(b.jarak.distance.replace("km", "").toUpperCase());
+    let comparison = 0;
+    if (jarakA > jarakB) {
+        comparison = 1;
+    } else if (jarakA < jarakB) {
+        comparison = -1;
+    }
+    return comparison;
+}

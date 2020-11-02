@@ -23,7 +23,7 @@ const dokwan = mongoose.Schema({
     }],
     perawatan: [{
         nama: String
-    }]
+    }],
 });
 
 module.exports = mongoose.model('dokwan', dokwan)
